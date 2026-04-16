@@ -1,9 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "1.5.31"
-    id("com.github.johnrengelman.shadow") version "7.1.0"
+    kotlin("jvm") version "2.3.20"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 repositories {
@@ -12,18 +13,17 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.apache.zookeeper:zookeeper:3.9.3")
+    implementation("org.apache.zookeeper:zookeeper:3.9.5")
 }
 
 tasks.withType<ShadowJar>() {
-    classifier = null
     manifest {
         attributes["Main-Class"] = "io.pravega.zookeeper.MainKt"
     }
 }
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions {
-    jvmTarget = "11"
+  compilerOptions {
+    jvmTarget = JvmTarget.fromTarget("17")
   }
 }
